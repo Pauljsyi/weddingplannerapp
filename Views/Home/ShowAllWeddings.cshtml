@@ -1,0 +1,54 @@
+@model MyViewModel
+<div class="text-center d-flex justify-content-around">
+    <div class="flex-1">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Wedding Of</th>
+                    <th>Date</th>
+                    <th>Guest Count</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Wedding w in @ViewBag.Rsvped)
+                {
+                    Rsvp? OnGuestList = w.Guests.FirstOrDefault(e => e.UserId == Context.Session.GetInt32("UserId"));
+                    <tr>
+                        <td><a href="weddings/@w.WeddingId">@w.WedderOne & @w.WedderTwo</a></td>
+                        <td>@w.Date.ToString("MM/dd/yyyy")</td>
+                        <td>@w.Guests.Count</td>
+                        <td>
+                            <div class="container d-flex">
+                                @if (w.UserId == @Context.Session.GetInt32("UserId"))
+                                {
+                                    <a href="wedding/@w.WeddingId/edit"><button class="btn btn-secondary mx-1">Edit</button></a>
+                                    <form asp-action="DestroyWedding" asp-controller="Home" asp-route-weddingId="@w.WeddingId"
+                                method="post">
+                                        <button value="Delete" class="btn btn-danger">delete</button>
+                                    </form>
+                                }
+                                else if (OnGuestList != null)
+                                {
+
+
+                                    <form asp-action="UnRsvp" asp-controller="Home" asp-route-rsvpId="@OnGuestList.RsvpId">
+                                        <button class="btn btn-warning mx-1">UNRSVP</button>
+                                    </form>
+
+                                }
+                                else
+                                {
+                                    <form asp-action="Rsvp" asp-controller="Home">
+                                        <input type="hidden" name="UserId" value="@Context.Session.GetInt32("UserId")">
+                                        <input type="hidden" name="WeddingId" value="@w.WeddingId">
+                                        <button class="btn btn-success mx-1">RSVP</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

@@ -1,0 +1,17 @@
+@model MyViewModel
+<h1 class="text-capitalize">@ViewBag.ThisWedding.WedderOne & @ViewBag.ThisWedding.WedderTwo's Wedding</h1>
+@Html.DisplayFor(m => m.Wedding.Date, "ShortDateTime")
+<h3>Date: @ViewBag.ThisWedding.Date.ToString("MM/dd/yyyy")</h3>
+<h3>Location: @ViewBag.ThisWedding.Address</h3>
+<h3>Guests:</h3>
+<div class="w-25" style="border: 2px solid black; ">
+
+    @foreach (User i in @ViewBag.AllUsers)
+    {
+        Rsvp? UsersRsvpToWedding = i.RsvpedWeddings.FirstOrDefault(e => e.WeddingId == @ViewBag.ThisWedding.WeddingId);
+        if (UsersRsvpToWedding != null)
+        {
+            <p class="text-capitalize">@i.LastName, @i.FirstName</p>
+        }
+    }
+</div>

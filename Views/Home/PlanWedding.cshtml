@@ -1,0 +1,33 @@
+@model Wedding
+
+<h1>@Context.Session.GetString("Username")</h1>
+<div class="text-center d-flex justify-content-around">
+    <div class="flex-1">
+        <h2>Plan a Wedding</h2>
+        <form asp-action="CreateWedding" asp-controller="Home" method="post">
+            <div class="mb-3">
+                <label asp-for="WedderOne">Wedder One</label>
+                <input asp-for="WedderOne" class="form-control">
+                <span asp-validation-for="WedderOne" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="WedderTwo">Wedder Two</label>
+                <input asp-for="WedderTwo" class="form-control">
+                <span asp-validation-for="WedderTwo" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Date">Date</label>
+                <input asp-for="Date" class="form-control">
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Address">Address</label>
+                <input asp-for="Address" class="form-control">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="UserId" value="@Context.Session.GetInt32("UserId")">
+            <button class="btn btn-success">Submit</button>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model User
+
+<div class="text-center d-flex justify-content-around">
+    <div class="flex-1">
+        <h2>Register</h2>
+        <form asp-action="CreateUser" asp-controller="Home" method="post">
+            <div class="mb-3">
+                <label asp-for="FirstName">First Name</label>
+                <input asp-for="FirstName" class="form-control">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="LastName">Last Name</label>
+                <input asp-for="LastName" class="form-control">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Confirm">Confirm Password</label>
+                <input asp-for="Confirm" class="form-control">
+                <span asp-validation-for="Confirm" class="text-danger"></span>
+            </div>
+            <button class="btn btn-success">Submit</button>
+        </form>
+    </div>
+
+    @* BRING IN PARTIALS! *@
+    <div class="flex-1">
+        <h2>Login</h2>
+        @await Html.PartialAsync("_Login")
+    </div>
+</div>
+
+<div class="container">
+    <h2>Users</h2>
+    <p>Feel free to login with existing users</p>
+    <p>Password: 123123123</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User's Name</th>
+                <th>User's Email</th>
+                <th>Password</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (User u in @ViewBag.AllUsers)
+            {
+                <tr>
+                    <td>@u.FirstName @u.LastName</td>
+                    <td>@u.Email</td>
+                    <td>@u.Password</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
